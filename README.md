@@ -36,19 +36,17 @@ Clone repository:
 git clone <repository-url>
 cd <project-folder>
 
-```
-
-# Create environment file
+Create environment file
 cp .env.example .env
 
-# Build and start docker containers
+Build and start docker containers
 docker compose up -d --build
 
-# Install composer dependencies
+Install composer dependencies
 docker compose run --rm app composer install
 
-# Generate application key
+Generate application key
 docker compose run --rm app php artisan key:generate
 
-# Run migrations
+Run migrations
 docker compose exec app php artisan migrate
