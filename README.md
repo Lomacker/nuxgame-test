@@ -86,5 +86,5 @@ Password: root
 Stop containers:
 
 ```bash
-docker compose exec app php artisan migrate
+docker compose down
 ```
