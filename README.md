@@ -1,4 +1,4 @@
-# Lucky App Test Task
+# Nuxgame Test Task
 
 Test task built with:
 
@@ -35,18 +35,56 @@ Clone repository:
 ```bash
 git clone <repository-url>
 cd <project-folder>
+```
 
-Create environment file
-cp .env.example .env
+Create environment file:
 
-Build and start docker containers
+```bash
+cp .env
+```
+
+Build and start docker containers:
+
+```bash
 docker compose up -d --build
+```
 
-Install composer dependencies
+Install composer dependencies:
+
+```bash
 docker compose run --rm app composer install
+```
 
-Generate application key
+Generate application key:
+
+```bash
 docker compose run --rm app php artisan key:generate
+```
 
-Run migrations
+Run migrations:
+
+```bash
 docker compose exec app php artisan migrate
+```
+
+Open application: 
+
+```
+http://localhost:8000
+```
+
+Database connection:
+
+```
+Host: 127.0.0.1
+Port: 3307
+Database: lucky
+Username: root
+Password: root
+```
+
+Stop containers:
+
+```bash
+docker compose exec app php artisan migrate
+```
