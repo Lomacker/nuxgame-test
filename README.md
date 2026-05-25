@@ -78,7 +78,7 @@ Database connection:
 ```
 Host: 127.0.0.1
 Port: 3307
-Database: lucky
+Database: nuxgame-test
 Username: root
 Password: root
 ```
