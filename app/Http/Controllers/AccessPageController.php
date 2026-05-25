@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccessLink;
-use Illuminate\Support\Str;
+use App\Services\AccessLinkService;
 
 class AccessPageController extends Controller
 {
     public function show(string $token)
     {
+        //dd($token, AccessLink::where('token', $token)->first());
+
         $link = AccessLink::findValidByToken($token);
 
         return view('access-page', [
@@ -16,32 +18,21 @@ class AccessPageController extends Controller
         ]);
     }
 
-    public function regenerate(string $token)
+    public function regenerate(string $token, AccessLinkService $accessLinkService)
     {
         $link = AccessLink::findValidByToken($token);
 
-        $link->update([
-            'is_active' => false,
-        ]);
-
-        $newLink = AccessLink::create([
-            'user_id' => $link->user_id,
-            'token' => Str::random(64),
-            'expires_at' => now()->addDays(7),
-        ]);
+        $newLink = $accessLinkService->regenerate($link);
 
         return redirect()->route('access.show', $newLink->token);
     }
 
-    public function deactivate(string $token)
+    public function deactivate(string $token, AccessLinkService $accessLinkService)
     {
         $link = AccessLink::findValidByToken($token);
 
-        $link->update([
-            'is_active' => false,
-        ]);
+        $accessLinkService->deactivate($link);
 
         return view('link-deactivated');
     }
-
 }

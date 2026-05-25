@@ -24,6 +24,21 @@ class AccessLink extends Model
         ];
     }
 
+    public static function findValidByToken(string $token): self
+    {
+        return self::where('token', $token)
+            ->where('is_active', true)
+            ->where('expires_at', '>', now())
+            ->firstOrFail();
+    }
+
+    public function deactivate(): void
+    {
+        $this->update([
+            'is_active' => false,
+        ]);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -32,13 +47,5 @@ class AccessLink extends Model
     public function luckyResults()
     {
         return $this->hasMany(LuckyResult::class);
-    }
-
-    public static function findValidByToken(string $token): self
-    {
-        return self::where('token', $token)
-            ->where('is_active', true)
-            ->where('expires_at', '>', now())
-            ->firstOrFail();
     }
 }

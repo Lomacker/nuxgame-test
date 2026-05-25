@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use App\Models\AccessLink;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Services\AccessLinkService;
 
 class RegisterController extends Controller
 {
@@ -14,21 +13,16 @@ class RegisterController extends Controller
         return view('register');
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:30'],
+    public function store(
+        RegisterRequest $request,
+        AccessLinkService $accessLinkService
+    ) {
+        $user = User::create($request->validated());
+
+        $link = $accessLinkService->createForUser($user);
+
+        return redirect()->route('access.show', [
+            'token' => $link->token,
         ]);
-
-        $user = User::create($validated);
-
-        $link = AccessLink::create([
-            'user_id' => $user->id,
-            'token' => Str::random(64),
-            'expires_at' => now()->addDays(7),
-        ]);
-
-        return redirect('/a/' . $link->token);
     }
 }

@@ -8,22 +8,22 @@
 
 <p>{{ request()->fullUrl() }}</p>
 
-<form method="POST" action="{{ route('access.regenerate', $link->token) }}">
+<form method="POST" action="{{ route('access.regenerate', ['token' => $link->token]) }}">
     @csrf
     <button type="submit">Regenerate link</button>
 </form>
 
-<form method="POST" action="{{ route('access.deactivate', $link->token) }}">
+<form method="POST" action="{{ route('access.deactivate', ['token' => $link->token]) }}">
     @csrf
     <button type="submit">Deactivate link</button>
 </form>
 
-<form method="POST" action="{{ route('lucky.play', $link->token) }}">
+<form method="POST" action="{{ route('lucky.play', ['token' => $link->token]) }}">
     @csrf
     <button type="submit">Imfeelinglucky</button>
 </form>
 
-<form method="GET" action="{{ route('lucky.history', $link->token) }}">
+<form method="GET" action="{{ route('lucky.history', ['token' => $link->token]) }}">
     <button type="submit">History</button>
 </form>
 

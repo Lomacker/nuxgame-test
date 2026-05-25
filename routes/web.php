@@ -9,17 +9,21 @@ Route::get('/', [RegisterController::class, 'index']);
 
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/a/{token}', [AccessPageController::class, 'show'])
-    ->name('access.show');
+Route::prefix('access/{token}')
+    ->group(function () {
 
-Route::post('/a/{token}/regenerate', [AccessPageController::class, 'regenerate'])
-    ->name('access.regenerate');
+        Route::get('/', [AccessPageController::class, 'show'])
+            ->name('access.show');
 
-Route::post('/a/{token}/deactivate', [AccessPageController::class, 'deactivate'])
-    ->name('access.deactivate');
+        Route::post('/regenerate', [AccessPageController::class, 'regenerate'])
+            ->name('access.regenerate');
 
-Route::post('/a/{token}/lucky', [LuckyController::class, 'play'])
-    ->name('lucky.play');
+        Route::post('/deactivate', [AccessPageController::class, 'deactivate'])
+            ->name('access.deactivate');
 
-Route::get('/a/{token}/history', [LuckyController::class, 'history'])
-    ->name('lucky.history');
+        Route::post('/lucky', [LuckyController::class, 'play'])
+            ->name('lucky.play');
+
+        Route::get('/history', [LuckyController::class, 'history'])
+            ->name('lucky.history');
+    });

@@ -6,11 +6,11 @@
 
 <p>Random number: {{ $result->random_number }}</p>
 
-<p>Result: {{ strtoupper($result->result) }}</p>
+<p>Result: {{ strtoupper($result->result->value) }}</p>
 
 <p>Win amount: {{ $result->win_amount }}</p>
 
-<a href="{{ route('access.show', $link->token) }}">
+<a href="{{ route('access.show', ['token' => $link->token]) }}">
     Back
 </a>
 

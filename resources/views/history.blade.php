@@ -12,7 +12,7 @@
     <div>
         <p>Number: {{ $result->random_number }}</p>
 
-        <p>Result: {{ strtoupper($result->result) }}</p>
+        <p>Result: {{ strtoupper($result->result->value) }}</p>
 
         <p>Win amount: {{ $result->win_amount }}</p>
 
